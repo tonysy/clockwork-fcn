@@ -13,7 +13,11 @@ class cityscapes:
         self.dir = data_path
         self.mean = np.array((72.78044, 83.21195, 73.45286), dtype=np.float32)
         # import cityscapes label helper and set up label mappings
-        sys.path.insert(0, '{}/scripts/helpers/'.format(self.dir))
+        # sys.path.insert(0, '{}/scripts/helpers/'.format(self.dir))
+        flag = os.path.exists('{}/cityscapesscripts/helpers/'.format(self.dir))
+        print flag
+        sys.path.insert(0, '{}/cityscapesscripts/helpers/'.format(self.dir))
+
         labels = __import__('labels')
         labels_and_ids = [(l.name, l.trainId) for l in labels.labels if l.trainId >= 0 and l.trainId < 255]
         self.classes = [l[0] for l in sorted(labels_and_ids, key=lambda x: x[1])]  # classes in ID order == network output order
@@ -34,7 +38,8 @@ class cityscapes:
         return [(item.split('/')[0], item.split('/')[1]) for item in dataset]
 
     def load_image(self, split, city, idx):
-        im = Image.open('{}/images/leftImg8bit/{}/{}/{}_leftImg8bit.png'.format(self.dir, split, city, idx))
+        # im = Image.open('{}/images/leftImg8bit/{}/{}/{}_leftImg8bit.png'.format(self.dir, split, city, idx))
+        im = Image.open('{}/leftImg8bit/{}/{}/{}_leftImg8bit.png'.format(self.dir, split, city, idx))
         return im
 
     def assign_trainIds(self, label):
@@ -52,7 +57,8 @@ class cityscapes:
         Load label image as 1 x height x width integer array of label indices.
         The leading singleton dimension is required by the loss.
         """
-        label = Image.open('{}/trainvaltest/gtFine/{}/{}/{}_gtFine_labelIds.png'.format(self.dir, split, city, idx))
+        # label = Image.open('{}/trainvaltest/gtFine/{}/{}/{}_gtFine_labelIds.png'.format(self.dir, split, city, idx))
+        label = Image.open('{}/gtFine/{}/{}/{}_gtFine_labelIds.png'.format(self.dir, split, city, idx))
         label = self.assign_trainIds(label)  # get proper labels for eval
         label = np.array(label, dtype=np.uint8)
         label = label[np.newaxis, ...]

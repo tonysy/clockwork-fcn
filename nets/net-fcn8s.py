@@ -91,11 +91,11 @@ def fcn(split, num_classes=None):
     return n.to_proto()
 
 def make_nets():
-    with open('voc-fcn8s.prototxt', 'w') as f:
+    with open('./prototxt/voc-fcn8s.prototxt', 'w') as f:
         f.write(str(fcn('deploy', 21)))
-    with open('nyud-fcn8s.prototxt', 'w') as f:
+    with open('./prototxt/nyud-fcn8s.prototxt', 'w') as f:
         f.write(str(fcn('deploy', 40)))
-    with open('cityscapes-fcn8s.prototxt', 'w') as f:
+    with open('./prototxt/cityscapes-fcn8s.prototxt', 'w') as f:
         f.write(str(fcn('deploy', 19)))
 
 if __name__ == '__main__':
