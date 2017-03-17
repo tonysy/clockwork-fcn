@@ -18,12 +18,14 @@ net = caffe.Net('./prototxt/stage-cityscapes-fcn8s.prototxt',
                 caffe.TEST)
 
 # Dataset details
-CS = cityscapes('/data/seg_dataset/')
+CS = cityscapes('/data//seg_dataset/')
+
 n_cl = len(CS.classes)
+
 split = 'val'
 label_frames = CS.list_label_frames(split)
 
-# Oracle per frame
+#
 hist_perframe = np.zeros((n_cl, n_cl))
 for i, idx in enumerate(label_frames):
     if i % 100 == 0:
